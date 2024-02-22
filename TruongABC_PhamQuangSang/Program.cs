@@ -1,6 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using TruongABC_PhamQuangSang.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<TruongAbcContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TruongAbcContext")));
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
