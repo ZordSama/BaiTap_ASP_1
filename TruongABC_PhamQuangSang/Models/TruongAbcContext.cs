@@ -24,8 +24,6 @@ public partial class TruongAbcContext : DbContext
 
     public virtual DbSet<Lop> Lops { get; set; }
 
-    public virtual DbSet<LopMonhoc> LopMonhocs { get; set; }
-
     public virtual DbSet<MonHoc> MonHocs { get; set; }
 
     public virtual DbSet<NhomTin> NhomTins { get; set; }
@@ -116,23 +114,6 @@ public partial class TruongAbcContext : DbContext
             entity.Property(e => e.TenLop).HasMaxLength(255);
         });
 
-        modelBuilder.Entity<LopMonhoc>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("LOP_MONHOC");
-
-            entity.Property(e => e.IdLop).HasColumnName("ID_LOP");
-            entity.Property(e => e.IdMon).HasColumnName("ID_MON");
-
-            entity.HasOne(d => d.IdLopNavigation).WithMany()
-                .HasForeignKey(d => d.IdLop)
-                .HasConstraintName("FK__LOP_MONHO__ID_LO__49C3F6B7");
-
-            entity.HasOne(d => d.IdMonNavigation).WithMany()
-                .HasForeignKey(d => d.IdMon)
-                .HasConstraintName("FK__LOP_MONHO__ID_MO__4AB81AF0");
-        });
 
         modelBuilder.Entity<MonHoc>(entity =>
         {
