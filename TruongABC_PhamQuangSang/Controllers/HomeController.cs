@@ -7,17 +7,17 @@ namespace TruongABC_PhamQuangSang.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private TruongAbcContext _db;
+    // private TruongAbcContext _db;
 
-    public HomeController(ILogger<HomeController> logger, TruongAbcContext db)
+    public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
-        _db = db;
+        // _db = db;
     }
 
     public IActionResult Index()
     {
-        return View(_db.TinTucs.ToList());
+        return View();
     }
 
     public IActionResult Privacy()

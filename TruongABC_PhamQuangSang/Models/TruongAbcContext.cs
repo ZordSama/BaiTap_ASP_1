@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace TruongABC_PhamQuangSang.Models;
@@ -46,16 +45,18 @@ public partial class TruongAbcContext : DbContext
 
             entity.HasOne(d => d.IdLopNavigation).WithMany()
                 .HasForeignKey(d => d.IdLop)
-                .HasConstraintName("FK__DIEM__ID_LOP__4BAC3F29");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__DIEM__ID_LOP__48CFD27E");
 
-            entity.HasOne(d => d.IdLop1).WithMany()
-                .HasForeignKey(d => d.IdLop)
-                .HasConstraintName("FK__DIEM__ID_LOP__4CA06362");
+            entity.HasOne(d => d.IdMonNavigation).WithMany()
+                .HasForeignKey(d => d.IdMon)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__DIEM__ID_MON__49C3F6B7");
         });
 
         modelBuilder.Entity<GiangVien>(entity =>
         {
-            entity.HasKey(e => e.IdGv).HasName("PK__GIANG_VI__8B62CF12DC14067B");
+            entity.HasKey(e => e.IdGv).HasName("PK__GIANG_VI__8B62CF1286DCE981");
 
             entity.ToTable("GIANG_VIEN");
 
@@ -68,7 +69,7 @@ public partial class TruongAbcContext : DbContext
 
         modelBuilder.Entity<GioiThieu>(entity =>
         {
-            entity.HasKey(e => e.IdGt).HasName("PK__GIOI_THI__8B62CF103A44124E");
+            entity.HasKey(e => e.IdGt).HasName("PK__GIOI_THI__8B62CF10E07EC103");
 
             entity.ToTable("GIOI_THIEU");
 
@@ -83,7 +84,7 @@ public partial class TruongAbcContext : DbContext
 
         modelBuilder.Entity<LichCt>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__LICH_CT__3214EC27A9541861");
+            entity.HasKey(e => e.Id).HasName("PK__LICH_CT__3214EC279ADD6ACB");
 
             entity.ToTable("LICH_CT");
 
@@ -95,7 +96,7 @@ public partial class TruongAbcContext : DbContext
 
         modelBuilder.Entity<LienKet>(entity =>
         {
-            entity.HasKey(e => e.IdLk).HasName("PK__LIEN_KET__8B62F4AB57A6C963");
+            entity.HasKey(e => e.IdLk).HasName("PK__LIEN_KET__8B62F4AB70105233");
 
             entity.ToTable("LIEN_KET");
 
@@ -106,7 +107,7 @@ public partial class TruongAbcContext : DbContext
 
         modelBuilder.Entity<Lop>(entity =>
         {
-            entity.HasKey(e => e.IdLop).HasName("PK__LOP__2DBE37944B13C33F");
+            entity.HasKey(e => e.IdLop).HasName("PK__LOP__2DBE37947D9FDC90");
 
             entity.ToTable("LOP");
 
@@ -114,10 +115,9 @@ public partial class TruongAbcContext : DbContext
             entity.Property(e => e.TenLop).HasMaxLength(255);
         });
 
-
         modelBuilder.Entity<MonHoc>(entity =>
         {
-            entity.HasKey(e => e.IdMon).HasName("PK__MON_HOC__276DB7294A18C318");
+            entity.HasKey(e => e.IdMon).HasName("PK__MON_HOC__276DB7291769F7A2");
 
             entity.ToTable("MON_HOC");
 
@@ -127,7 +127,7 @@ public partial class TruongAbcContext : DbContext
 
         modelBuilder.Entity<NhomTin>(entity =>
         {
-            entity.HasKey(e => e.IdNhomTin).HasName("PK__NHOM_TIN__3DE8289757B04D64");
+            entity.HasKey(e => e.IdNhomTin).HasName("PK__NHOM_TIN__3DE82897278A69AF");
 
             entity.ToTable("NHOM_TIN");
 
@@ -137,7 +137,7 @@ public partial class TruongAbcContext : DbContext
 
         modelBuilder.Entity<TinTuc>(entity =>
         {
-            entity.HasKey(e => e.IdTin).HasName("PK__TIN_TUC__27BF62CCF72F3F89");
+            entity.HasKey(e => e.IdTin).HasName("PK__TIN_TUC__27BF62CC19B93B16");
 
             entity.ToTable("TIN_TUC");
 
@@ -149,12 +149,13 @@ public partial class TruongAbcContext : DbContext
 
             entity.HasOne(d => d.NhomTinNavigation).WithMany(p => p.TinTucs)
                 .HasForeignKey(d => d.NhomTin)
-                .HasConstraintName("FK__TIN_TUC__NhomTin__48CFD27E");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TIN_TUC__NhomTin__47DBAE45");
         });
 
         modelBuilder.Entity<VanBanPq>(entity =>
         {
-            entity.HasKey(e => e.MaVb).HasName("PK__VAN_BAN___53E1D4C97EB4337A");
+            entity.HasKey(e => e.MaVb).HasName("PK__VAN_BAN___53E1D4C9B94257DF");
 
             entity.ToTable("VAN_BAN_PQ");
 

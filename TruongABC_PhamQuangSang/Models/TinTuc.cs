@@ -13,9 +13,9 @@ public partial class TinTuc
 
     public string? NoiDung { get; set; }
 
-    public int? NhomTin { get; set; }
+    public int NhomTin { get; set; }
 
     public string? Anh { get; set; }
 
-    public virtual NhomTin? NhomTinNavigation { get; set; }
+    public virtual NhomTin NhomTinNavigation { get; set; } = null!;
 }

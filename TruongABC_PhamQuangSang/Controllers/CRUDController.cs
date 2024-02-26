@@ -11,6 +11,10 @@ public class CRUDController : Controller
         _db = db;
     }
     public ActionResult TinTuc(){
-        return View("~/Views/Admin/CRUD/Tintuc.cshtml", _db.TinTucs.ToList());
+        return View("~/Views/Admin/CRUD/Tintuc.cshtml", _db);
+    }
+
+    public JsonResult GetTinTuc(int ID){
+        return Json(_db.TinTucs.Where(x => x.IdTin == ID).FirstOrDefault());
     }
 }
