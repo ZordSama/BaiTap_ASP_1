@@ -495,3 +495,4 @@ $RECYCLE.BIN/
 
 # Built Visual Studio Code Extensions
 *.vsix
+/TruongABC_PhamQuangSang/wwwroot/assets/img

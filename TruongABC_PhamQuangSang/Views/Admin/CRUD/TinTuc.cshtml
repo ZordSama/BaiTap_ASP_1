@@ -60,8 +60,8 @@
                 </div>
                 <div
                     class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" id="createProductButton" data-modal-target="createProductModal"
-                        data-modal-toggle="createProductModal" class="btn-primary">
+                    <button type="button" id="createProductButton" data-modal-target="createTinTucModal"
+                        data-modal-toggle="createTinTucModal" class="btn-primary">
                         <svg class="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd"
@@ -120,9 +120,10 @@
                                             foreach (var nhomtin in Model.NhomTins.ToList())
                                             {
                                                 <li class="flex items-center">
-                                                    <input id="filterNhomTinID@{@Html.Raw(nhomtin.IdNhomTin)}" type="checkbox" value=""
+                                                    <input id="@Html.Raw("filterNhomTinID"+ nhomtin.IdNhomTin)" type="checkbox"
+                                                        value=""
                                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                                    <label for="filterNhomTinID@{@Html.Raw(nhomtin.IdNhomTin)}"
+                                                    <label for="@Html.Raw("filterNhomTinID" + nhomtin.IdNhomTin)"
                                                         class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">@Html.Raw(nhomtin.TenNhomTin)
                                                         (@Html.Raw(nhomtin.TinTucs.ToList().Count))</label>
                                                 </li>
@@ -175,8 +176,7 @@
                                 <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                                     <td class="p-4 w-4">
                                         <div class="flex items-center">
-                                            <input id="checkbox-table-search-1" type="checkbox"
-                                                onclick="event.stopPropagation()"
+                                            <input id="checkbox-table-search-@Html.Raw(tintuc.IdTin)" type="checkbox" onclick="event.stopPropagation()"
                                                 class="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                             <label for="checkbox-table-search-1" class="sr-only">chọn</label>
                                         </div>
@@ -188,7 +188,13 @@
                                     <td class="px-4 py-3">
                                         <div
                                             class="flex items-center mr-3 font-semibold text-base text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img src="@Html.Raw(tintuc.Anh)" alt="image" class="h-8 w-auto mr-3">
+                                            @{
+                                                if (tintuc.Anh != null && tintuc.Anh != "")
+                                                {
+                                                    Console.WriteLine(tintuc.Anh);
+                                                    <img src="@Url.Content(tintuc.Anh)" alt="image" class="h-8 w-auto mr-3">
+                                                }
+                                            }
                                             @Html.Raw(tintuc.TenTin)
                                         </div>
                                     </td>
@@ -207,8 +213,8 @@
                                         <div class="flex items-center space-x-4">
                                             <button type="button" data-drawer-target="drawer-update-TinTuc"
                                                 data-drawer-show="drawer-update-TinTuc" aria-controls="drawer-update-TinTuc"
-                                                class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                                                onclick="getTinTuc(@Html.Raw(tintuc.IdTin))">
+                                                class="btn-primary"
+                                                onclick="getTinTuc(@Html.Raw(tintuc.IdTin));">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5"
                                                     viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path
@@ -288,7 +294,7 @@
     </div>
 </section>
 <!-- End block -->
-<div id="createProductModal" tabindex="-1" aria-hidden="true"
+<div id="createTinTucModal" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] md:h-full">
     <div class="relative p-4 w-full max-w-3xl h-full md:h-auto">
         <!-- Modal content -->
@@ -298,7 +304,7 @@
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Thêm tin tức</h3>
                 <button type="button"
                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-toggle="createProductModal">
+                    data-modal-toggle="createTinTucModal">
                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
@@ -309,7 +315,7 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form action="#">
+            <form action="javascript:;" id="fcreateTinTuc">
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     <div>
                         <label for="TenTin" class="label">Tiêu đề</label>
@@ -331,13 +337,13 @@
 
                     <div class="sm:col-span-2">
                         <label for="TomTat" class="label">Tóm tắt</label>
-                        <textarea id="TomTat" name="TomTat" class="text-field-sm" placeholder="Viết tóm tắt...">
-                        </textarea>
+                        <textarea id="TomTat" name="TomTat" class="text-field-sm"
+                            placeholder="Viết tóm tắt..."></textarea>
                     </div>
                     <div class="sm:col-span-2">
                         <label for="NoiDung" class="label">Nội dung</label>
-                        <textarea id="NoiDung" name="NoiDung" class="text-field-lg" placeholder="Nhập nội dung...">
-                        </textarea>
+                        <textarea id="NoiDung" name="NoiDung" class="text-field-lg"
+                            placeholder="Nhập nội dung..."></textarea>
                     </div>
                 </div>
                 <div class="mb-4">
@@ -356,13 +362,14 @@
                                 </p>
                                 <p class="text-xs text-gray-500 dark:text-gray-400">hỗ trợ PNG, JPG</p>
                             </div>
-                            <img id="imgInputPreview" src="" alt="" class="absolute w-full h-full inset-0 hidden hover:opacity-30 object-cover object-center">
+                            <img id="imgInputPreview" src="" alt=""
+                                class="absolute w-full h-full inset-0 hidden hover:opacity-30 object-cover object-center">
                             <input id="dropzone-file" type="file" class="hidden" accept=".JPG,.png">
                         </label>
                     </div>
                 </div>
                 <div class="items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-                    <button type="submit" class="btn-primary">
+                    <button type="btn" class="btn-primary" onclick="createTinTuc();">
                         <svg class="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd"
@@ -370,7 +377,7 @@
                         </svg>
                         Thêm tin này
                     </button>
-                    <button data-modal-toggle="createProductModal" type="button" class="btn-danger-outline">
+                    <button data-modal-toggle="createTinTucModal" type="button" class="btn-danger-outline">
                         <svg class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -385,13 +392,14 @@
     </div>
 </div>
 <!-- drawer component -->
-<form action="#" id="drawer-update-TinTuc"
+<form action="javascript:;" id="drawer-update-TinTuc"
     class="fixed top-0 left-0 z-40 w-full h-screen max-w-3xl overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800"
     tabindex="-1" aria-labelledby="drawer-update-TinTuc-label" aria-hidden="true">
-    <input type="number" name="ID_TIN" id="ID_TIN" hidden disabled>
+    <input type="number" name="ID_TIN" id="ID_TIN" hidden readonly>
     <div class="relative w-full h-full p-4">
         <h5 id="drawer-label"
-            class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Sửa tin tức "ID: <span id="alterID"></span>"</h5>
+            class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Sửa
+            tin tức "ID: <span id="alterID"></span>"</h5>
         <button type="button" data-drawer-dismiss="drawer-update-TinTuc" aria-controls="drawer-update-TinTuc"
             class="btn-ghost">
             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
@@ -406,29 +414,21 @@
             <div class="space-y-4 sm:col-span-2 sm:space-y-6">
                 <div>
                     <label for="TenTin" class="label">Tiêu đề</label>
-                    <input type="text" name="TenTin" id="TenTin" class="input"
-                        placeholder="Type product name" required="">
+                    <input type="text" name="TenTin" id="TenTin" class="input" placeholder="Type product name"
+                        required="">
                 </div>
                 <div>
                     <label for="TomTat" class="label">Tóm tắt</label>
-                    <textarea id="TomTat" name="TomTat"
-                        name="TomTat"
-                        class="text-field-sm"
-                        required="">
-                    </textarea>
+                    <textarea id="TomTat" name="TomTat" name="TomTat" class="text-field-sm" required=""></textarea>
                 </div>
-                 <div>
+                <div>
                     <label for="NoiDung" class="label">Nội dung</label>
-                    <textarea id="NoiDung" 
-                        name="NoiDung"
-                        class="text-field-lg"
-                        required="">
-                    </textarea>
+                    <textarea id="NoiDung" name="NoiDung" class="text-field-lg" required=""></textarea>
                 </div>
                 <div class="mb-4">
-                    <span class="label">Ảnh</span>
-                     <div class="flex justify-center items-center w-full">
-                        <label for="dropzone-file"
+                    <span class="label" id="imgInpLabel-2">Ảnh</span>
+                    <div class="flex justify-center items-center w-full">
+                        <label for="dropzone-file-2"
                             class="relative flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                             <div class="flex flex-col justify-center items-center pt-5 pb-6">
                                 <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400" fill="none"
@@ -441,8 +441,9 @@
                                 </p>
                                 <p class="text-xs text-gray-500 dark:text-gray-400">hỗ trợ PNG, JPG</p>
                             </div>
-                            <img id="imgInputPreview" src="" alt="" class="absolute w-full h-full inset-0 hidden hover:opacity-30 object-cover object-center">
-                            <input id="dropzone-file" type="file" name="Anh" class="hidden" accept=".JPG,.png">
+                            <img id="imgInputPreview-2" src="" alt=""
+                                class="absolute w-full h-full inset-0 hidden hover:opacity-30 object-cover object-center">
+                            <input id="dropzone-file-2" type="file" name="Anh" class="hidden" accept=".JPG,.png">
                         </label>
                     </div>
                 </div>
@@ -450,8 +451,8 @@
             <div class="flex flex-col justify-between space-y-4 sm:space-y-6">
                 <div>
                     <label for="TenNhomTin" class="label">Nhóm tin</label>
-                    <input type="text" name="TenNhomTin" id="TenNhomTin" class="input"
-                        placeholder="Nhập tên nhóm tin" required="" list="TenNhomTins">
+                    <input type="text" name="TenNhomTin" id="TenNhomTin" class="input" placeholder="Nhập tên nhóm tin"
+                        required="" list="TenNhomTins">
                     <datalist id="TenNhomTins">
                         @{
                             foreach (var nhomtin in Model.NhomTins)
@@ -462,10 +463,8 @@
                     </datalist>
                 </div>
                 <div class="flex flex-col gap-4 mt-6">
-                    <button type="submit"
-                        class="btn-primary h-20">Cập nhật</button>
-                    <button type="button"
-                        class="btn-danger-outline h-20">
+                    <button type="button" class="btn-primary h-20" onclick="editTinTuc();">Cập nhật</button>
+                    <button type="button" class="btn-danger-outline h-20">
                         <svg aria-hidden="true" class="w-5 h-5 mr-1 -ml-1" fill="currentColor" viewbox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -480,7 +479,20 @@
         <div id="editorCover" class="drawer-cover">
             <div class="grid items-center w-full h-full">
                 <div class="text-center text-blue-400">
-                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="animate-spin text-blue-400 w-20 h-20 mx-auto"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="#000000" fill-rule="evenodd" clip-rule="evenodd"> <path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8z" opacity=".2"></path> <path d="M7.25.75A.75.75 0 018 0a8 8 0 018 8 .75.75 0 01-1.5 0A6.5 6.5 0 008 1.5a.75.75 0 01-.75-.75z"></path> </g> </g></svg>
+                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        class="animate-spin text-blue-400 w-20 h-20 mx-auto">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <g fill="#000000" fill-rule="evenodd" clip-rule="evenodd">
+                                <path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8z"
+                                    opacity=".2"></path>
+                                <path
+                                    d="M7.25.75A.75.75 0 018 0a8 8 0 018 8 .75.75 0 01-1.5 0A6.5 6.5 0 008 1.5a.75.75 0 01-.75-.75z">
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -496,8 +508,7 @@
         <h5 class="mb-5 text-xl font-bold text-gray-900 dark:text-white">$2999</h5>
     </div>
     <button type="button" data-drawer-dismiss="drawer-read-product-advanced"
-        aria-controls="drawer-read-product-advanced"
-        class="btn-ghost">
+        aria-controls="drawer-read-product-advanced" class="btn-ghost">
         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"

@@ -1,3 +1,4 @@
+// var isUploaded = false;
 $(document).ready(function () {});
 function getTinTuc(ID) {
   $.ajax({
@@ -7,19 +8,25 @@ function getTinTuc(ID) {
     success: function (response) {
       if (response.success) {
         var TinTuc = JSON.parse(response.data);
+        // console.log(TinTuc);
         var Form = $("#drawer-update-TinTuc");
         for (var key in TinTuc) {
-          console.log(key);
-          console.log(Form.find("[name=" + key + "]"));
           var inp = Form.find("[name=" + key + "]");
           if (inp.is("input") && inp.attr("type") !== "file")
             inp.val(TinTuc[key]);
           if (inp.is("textarea")) {
-            console.log(TinTuc[key]);
             inp.html(TinTuc[key]);
           }
-          if (inp.attr("type") === "file")
-            loadURLToInputFiled(TinTuc[key], inp);
+          if (inp.attr("type") === "file") {
+            var url = TinTuc[key];
+            if (url[0] === "~") {
+              url = url.replace("~", window.location.origin);
+            }
+            var imgPreview = $("#imgInputPreview-2");
+            imgPreview.attr("src", url);
+            imgPreview.show();
+            $("#dropzone-file-2").val("");
+          }
         }
         $("#editorCover").hide();
       }
@@ -29,30 +36,64 @@ function getTinTuc(ID) {
     },
   });
 }
-
-function loadURLToInputFiled(url, ele) {
-  getImgURL(url, (imgBlob) => {
-    // Load img blob to input
-    // WIP: UTF8 character error
-    let fileName = url.split("/").pop();
-    let file = new File(
-      [imgBlob],
-      fileName,
-      { type: "image/jpeg", lastModified: new Date().getTime() },
-      "utf-8"
-    );
-    let container = new DataTransfer();
-    container.items.add(file);
-    ele.files = container.files;
+function createTinTuc() {
+  var formData = new FormData(document.getElementById("fcreateTinTuc"));
+  var file = $("#dropzone-file").prop("files")[0];
+  if (file != undefined) formData.append("file", file);
+  $.ajax({
+    url: "/CRUD/CreateTinTuc/",
+    type: "POST",
+    contentType: false,
+    processData: false,
+    cache: false,
+    data: formData,
+    success: function (response) {
+      if (response.success) {
+        // toast
+        iziToast.success({
+          title: "Thành công",
+          message: response.message,
+          position: "topCenter",
+        });
+        window.location.reload();
+      } else {
+        iziToast.error({
+          title: "Thông báo",
+          message: response.message,
+          position: "topCenter",
+        });
+      }
+    },
   });
 }
-// xmlHTTP return blob respond
-function getImgURL(url, callback) {
-  var xhr = new XMLHttpRequest();
-  xhr.onload = function () {
-    callback(xhr.response);
-  };
-  xhr.open("GET", url);
-  xhr.responseType = "blob";
-  xhr.send();
+
+function editTinTuc() {
+  var formData = new FormData(document.getElementById("drawer-update-TinTuc"));
+  var file = $("#dropzone-file-2").prop("files")[0];
+  if (file != undefined) formData.append("file", file);
+  $.ajax({
+    url: "/CRUD/UpdateTinTuc/" ,
+    type: "PUT",
+    contentType: false,
+    processData: false,
+    cache: false,
+    data: formData,
+    success: function (response) {
+      if (response.success) {
+        // toast
+        iziToast.success({
+          title: "Thành công",
+          message: response.message,
+          position: "topCenter",
+        });
+        window.location.reload();
+      } else {
+        iziToast.error({
+          title: "Thông báo",
+          message: response.message,
+          position: "topCenter",
+        });
+      }
+    },
+  });
 }
