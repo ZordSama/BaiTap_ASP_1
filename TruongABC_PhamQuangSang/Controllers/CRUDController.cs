@@ -78,8 +78,8 @@ public class CRUDController : Controller
                     tintuc.NhomTin = (int)idNhomTin;
                 else
                 {
-                    tintuc.NhomTin = _db.NhomTins.Count() + 1;
-                    CreateNhomTin(Convert.ToString(newTinTuc["TenNhomTin"]));
+                    tintuc.NhomTin =  CreateNhomTin(Convert.ToString(newTinTuc["TenNhomTin"])).IdNhomTin;
+
                 }
                 // Console.WriteLine(tintuc.NhomTin);
                 tintuc.TomTat = Convert.ToString(newTinTuc["TomTat"]);
@@ -113,7 +113,7 @@ public class CRUDController : Controller
     public JsonResult UpdateTinTuc(IFormCollection newTinTuc)
     {
         JsonResponseViewModel response = new JsonResponseViewModel();
-        Console.WriteLine(newTinTuc["ID_TIN"]);
+        // Console.WriteLine(newTinTuc["ID_TIN"]);
         var tintuc = _db.TinTucs.FirstOrDefault(x => x.IdTin == Convert.ToInt32(newTinTuc["ID_TIN"]));
         Console.WriteLine(_db.TinTucs.FirstOrDefault(x => x.IdTin == Convert.ToInt32(newTinTuc["ID_TIN"])));
         try
@@ -161,20 +161,51 @@ public class CRUDController : Controller
         }
         return Json(response);
     }
-    public bool CreateNhomTin(string TenNhomTin)
+
+    [HttpDelete]
+    public JsonResult DeleteTinTuc(IFormCollection newTinTuc)
     {
+        JsonResponseViewModel response = new JsonResponseViewModel();
+        int idTin = Convert.ToInt32(newTinTuc["idTin"]);
         try
         {
-            NhomTin nhomTin = new NhomTin();
+            Console.WriteLine(idTin);
+            var tinTuc = _db.TinTucs.FirstOrDefault(t => t.IdTin == idTin);
+            if (tinTuc != null)
+            {
+                _db.TinTucs.Remove(tinTuc);
+                _db.SaveChanges();
+                response.Success = true;
+                response.Message = "Đã xóa tin tức";
+            }
+            else
+            {
+                response.Success = false;
+                response.Message = "Không tìm thấy tin tức";
+            }
+        }
+        catch (System.Exception e)
+        {
+            response.Success = false;
+            response.Message = e.Message;
+        }
+
+        return Json(response);
+    }
+    public NhomTin CreateNhomTin(string TenNhomTin)
+    {
+        NhomTin nhomTin = new NhomTin();
+        try
+        {
             nhomTin.TenNhomTin = TenNhomTin;
             _db.NhomTins.Add(nhomTin);
             _db.SaveChanges();
-            return true;
+            return nhomTin;
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            return false;
+            return nhomTin;
         }
     }
     private string SaveImage(IFormFile file)
