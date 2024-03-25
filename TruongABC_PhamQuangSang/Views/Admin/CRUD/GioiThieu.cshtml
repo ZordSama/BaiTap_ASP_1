@@ -1,18 +1,18 @@
 @model TruongABC_PhamQuangSang.Models.TruongAbcContext;
 
 @{
-    ViewData["Title"] = "Quản lí tin tức";
-    var count = Model.TinTucs.ToList().Count;
+    ViewData["Title"] = "Quản lí Giới Thiệu";
+    var count = Model.GioiThieus.ToList().Count;
 }
 <!-- Start block -->
 <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
     <div class="mx-auto max-w-screen-2xl px-4 lg:px-12">
-        <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-visible">
+        <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div
                 class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                 <div class="flex-1 flex items-center space-x-2">
                     <h5>
-                        <span class="text-gray-500">Tổng số tin tức: @Html.Raw(count)</span>
+                        <span class="text-gray-500">Tổng số giới thiệu: @Html.Raw(count)</span>
                         <span class="dark:text-white"></span>
                     </h5>
                     <h5 class="text-gray-500 dark:text-gray-400 ml-1">1-100 (<span id="nowViewing">@{
@@ -60,81 +60,16 @@
                 </div>
                 <div
                     class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" id="createProductButton" data-modal-target="createTinTucModal"
-                        data-modal-toggle="createTinTucModal" class="btn-primary">
+                    <button type="button" id="createProductButton" data-modal-target="creategioithieuModal"
+                        data-modal-toggle="creategioithieuModal" class="btn-primary">
                         <svg class="h-3.5 w-3.5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd"
                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg>
-                        Thêm tin tức mới
+                        Thêm giới thiệu mới
                     </button>
-                    <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown" class="btn-details-outline"
-                        type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-                            class="h-4 w-4 mr-1.5 -ml-1 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        Lọc
-                        <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path clip-rule="evenodd" fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                        </svg>
-                    </button>
-                    <div id="filterDropdown"
-                        class="z-50 hidden px-3 pt-1 bg-white rounded-lg shadow w-80 dark:bg-gray-700 right-0 overflow-auto">
-                        <div class="flex items-center justify-between pt-2">
-                            <h6 class="text-sm font-medium text-black dark:text-white">Bộ lọc</h6>
-                            <div class="flex items-center space-x-3">
-                                <a href="#" class="link">Lưu
-                                    bộ lọc</a>
-                                <a href="#" class="link">Hủy
-                                    hết</a>
-                            </div>
-                        </div>
-
-                        <div id="accordion-flush" data-accordion="collapse"
-                            data-active-classes="text-black dark:text-white"
-                            data-inactive-classes="text-gray-500 dark:text-gray-400">
-                            <!-- Category -->
-                            <h2 id="category-heading">
-                                <button type="button"
-                                    class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
-                                    data-accordion-target="#category-body" aria-expanded="true"
-                                    aria-controls="category-body">
-                                    <span>Nhóm tin</span>
-                                    <svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0"
-                                        fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                                    </svg>
-                                </button>
-                            </h2>
-                            <div id="category-body" class="hidden" aria-labelledby="category-heading">
-                                <div class="py-2 font-light border-b border-gray-200 dark:border-gray-600">
-                                    <ul class="space-y-2">
-                                        @{
-                                            foreach (var nhomtin in Model.NhomTins.ToList())
-                                            {
-                                                <li class="flex items-center">
-                                                    <input id="@Html.Raw("filterNhomTinID"+ nhomtin.IdNhomTin)" type="checkbox"
-                                                        value=""
-                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                                    <label for="@Html.Raw("filterNhomTinID" + nhomtin.IdNhomTin)"
-                                                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">@Html.Raw(nhomtin.TenNhomTin)
-                                                        (@Html.Raw(nhomtin.TinTucs.ToList().Count))</label>
-                                                </li>
-                                            }
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                
                     <div class="flex items-center space-x-3 w-full md:w-auto">
                         <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal"
                             class="btn-danger-outline">
@@ -161,25 +96,23 @@
                                 </div>
                             </th>
                             <th scope="col" class="p-4">ID</th>
-                            <th scope="col" class="p-4">Tên tin tức</th>
-                            <th scope="col" class="p-4">Nhóm tin</th>
-                            <th scope="col" class="p-4">Tóm tắt</th>
-                            <th scope="col" class="p-4">Nội dung</th>
+                            <th scope="col" class="p-4">Tiêu đề giới thiệu</th>
+                            <th scope="col" class="p-4">Nội dung giới thiệu</th>
                             <th scope="col" class="p-4"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @{
-                            foreach (var tintuc in Model.TinTucs.ToList())
+                            foreach (var gioithieu in Model.GioiThieus.ToList())
                             {
-                                int id = tintuc.IdTin;
+                                int id = gioithieu.IdGt;
                                 <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700" style="max-height: 80px;">
                                     <td class="p-4 w-4">
                                         <div class="flex items-center">
-                                            <input id="checkbox-table-search-@Html.Raw(tintuc.IdTin)" type="checkbox"
+                                            <input id="checkbox-table-search-@Html.Raw(id)" type="checkbox"
                                                 onclick="event.stopPropagation()"
                                                 class="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="checkbox-table-search-@Html.Raw(tintuc.IdTin)" class="sr-only">chọn</label>
+                                            <label for="checkbox-table-search-@Html.Raw(id)" class="sr-only">chọn</label>
                                         </div>
                                     </td>
                                     <th scope="row"
@@ -189,32 +122,18 @@
                                     <td class="px-4 py-3">
                                         <div
                                             class="flex items-center mr-3 font-semibold text-base text-gray-900 whitespace-nowrap dark:text-white">
-                                            @{
-                                                if (tintuc.Anh != null && tintuc.Anh != "")
-                                                {
-                                                    @* Console.WriteLine(tintuc.Anh); *@
-                                                    <img src="@Url.Content(tintuc.Anh)" alt="image" class="h-8 w-auto mr-3">
-                                                }
-                                            }
-                                            @Html.Raw(tintuc.TenTin)
+                                            @Html.Raw(gioithieu.TenGt)
                                         </div>
                                     </td>
-                                    <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <span
-                                            class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">@Html.Raw(tintuc.NhomTinNavigation.TenNhomTin)</span>
-                                    </td>
-                                    <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate" style="max-width: 200px;">
-                                        @Html.Raw(tintuc.TomTat)
-                                    </td>
                                     <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate" style="max-width: 300px;">
-                                        @Html.Raw(tintuc.NoiDung)</td>
+                                        @Html.Raw(gioithieu.NoiDungGt)</td>
 
 
                                     <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <div class="flex items-center space-x-4">
-                                            <button type="button" data-drawer-target="drawer-update-TinTuc"
-                                                data-drawer-show="drawer-update-TinTuc" aria-controls="drawer-update-TinTuc"
-                                                class="btn-primary" onclick="getTinTuc(@Html.Raw(tintuc.IdTin));">
+                                            <button type="button" data-drawer-target="drawer-update-GioiThieu"
+                                                data-drawer-show="drawer-update-GioiThieu" aria-controls="drawer-update-GioiThieu"
+                                                class="btn-primary" onclick="getGioiThieu(@Html.Raw(id));">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5"
                                                     viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path
@@ -225,9 +144,9 @@
                                                 </svg>
                                                 Sửa
                                             </button>
-                                            <button type="button" data-drawer-target="drawer-preview"
+                                            @* <button type="button" data-drawer-target="drawer-preview"
                                                 data-drawer-show="drawer-preview" aria-controls="drawer-preview"
-                                                class="btn-details-outline" onclick="detailsReq(@Html.Raw(tintuc.IdTin));">
+                                                class="btn-details-outline" onclick="detailsReq(@Html.Raw(id));">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
                                                     class="w-4 h-4 mr-2 -ml-0.5">
                                                     <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
@@ -235,9 +154,9 @@
                                                         d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" />
                                                 </svg>
                                                 Xem chi tiết
-                                            </button>
+                                            </button> *@
                                             <button type="button" data-modal-target="delete-modal"
-                                                data-modal-toggle="delete-modal" class="btn-danger-outline" onclick="setDelId(@Html.Raw(tintuc.IdTin))">
+                                                data-modal-toggle="delete-modal" class="btn-danger-outline" onclick="setDelId(@Html.Raw(id))">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5"
                                                     viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fill-rule="evenodd"
@@ -294,17 +213,17 @@
     </div>
 </section>
 <!-- End block -->
-<div id="createTinTucModal" tabindex="-1" aria-hidden="true"
+<div id="creategioithieuModal" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] md:h-full">
     <div class="relative p-4 w-full md:w-1/2 h-full md:h-auto">
         <!-- Modal content -->
         <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
             <!-- Modal header -->
             <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Thêm tin tức</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Thêm giới thiệu</h3>
                 <button type="button"
                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-toggle="createTinTucModal">
+                    data-modal-toggle="creategioithieuModal">
                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
@@ -315,57 +234,17 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form action="javascript:;" id="fcreateTinTuc">
+            <form action="javascript:;" id="fcreateGioiThieu">
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     <div>
-                        <label for="TenTin" class="label">Tiêu đề</label>
-                        <input type="text" name="TenTin" id="TenTin" class="input" placeholder="Tiêu đề tin tức"
+                        <label for="TenGt" class="label">Tiêu đề</label>
+                        <input type="text" name="TenGt" id="TenGt" class="input" placeholder="Tiêu đề tin tức"
                             required="">
                     </div>
-                    <div><label for="TenNhomTin" class="label">Nhóm tin</label>
-                        <input type="text" name="TenNhomTin" id="TenNhomTin" class="input"
-                            placeholder="Nhập tên nhóm tin" required="" list="TenNhomTins">
-                        <datalist id="TenNhomTins">
-                            @{
-                                foreach (var nhomtin in Model.NhomTins)
-                                {
-                                    <option value="@Html.Raw(nhomtin.TenNhomTin)"></option>
-                                }
-                            }
-                        </datalist>
-                    </div>
-
                     <div class="sm:col-span-2">
-                        <label for="TomTat" class="label">Tóm tắt</label>
-                        <textarea id="TomTat" name="TomTat" class="text-field-sm"
-                            placeholder="Viết tóm tắt..."></textarea>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label for="NoiDung" class="label">Nội dung</label>
-                        <textarea id="NoiDungC" name="NoiDung" class="text-field-lg editor"
+                        <label for="NoiDungGt" class="label">Nội dung</label>
+                        <textarea id="NoiDungGtC" name="NoiDungGt" class="text-field-lg editor"
                             placeholder="Nhập nội dung..."></textarea>
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <span class="label" id="imgInpLabel">Thêm ảnh</span>
-                    <div class="flex justify-center items-center w-full">
-                        <label for="dropzone-file"
-                            class="relative flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                            <div class="flex flex-col justify-center items-center pt-5 pb-6">
-                                <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400" fill="none"
-                                    stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                                </svg>
-                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                    <span class="font-semibold" id="imgSeletorText">Click để thêm ảnh</span>
-                                </p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">hỗ trợ PNG, JPG</p>
-                            </div>
-                            <img id="imgInputPreview" src="" alt=""
-                                class="absolute w-full h-full inset-0 hidden hover:opacity-30 object-cover object-center">
-                            <input id="dropzone-file" type="file" class="hidden" accept=".JPG,.png">
-                        </label>
                     </div>
                 </div>
                 <div class="items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
@@ -375,9 +254,9 @@
                             <path clip-rule="evenodd" fill-rule="evenodd"
                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg>
-                        Thêm tin này
+                        Thêm Giới thiệu này
                     </button>
-                    <button data-modal-toggle="createTinTucModal" type="button" class="btn-danger-outline">
+                    <button data-modal-toggle="creategioithieuModal" type="button" class="btn-danger-outline">
                         <svg class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -392,15 +271,15 @@
     </div>
 </div>
 <!-- drawer component -->
-<form action="" id="drawer-update-TinTuc"
+<form action="" id="drawer-update-GioiThieu"
     class="fixed top-0 left-0 z-40 w-full h-screen max-w-3xl overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800"
-    tabindex="-1" aria-labelledby="drawer-update-TinTuc-label" aria-hidden="true">
-    <input type="number" name="ID_TIN" id="ID_TIN" hidden readonly>
+    tabindex="-1" aria-labelledby="drawer-update-GioiThieu-label" aria-hidden="true">
+    <input type="number" name="IdGt" id="IdGt" hidden readonly>
     <div class="relative w-full h-full p-4">
         <h5 id="drawer-label"
             class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Sửa
-            tin tức "<span id="alterID"></span>"</h5>
-        <button type="button" data-drawer-dismiss="drawer-update-TinTuc" aria-controls="drawer-update-TinTuc"
+            Giới thiệu "<span id="alterID"></span>"</h5>
+        <button type="button" data-drawer-dismiss="drawer-update-GioiThieu" aria-controls="drawer-update-GioiThieu"
             class="btn-ghost">
             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg">
@@ -413,67 +292,26 @@
         <div class="grid gap-4 sm:grid-cols-3 sm:gap-6 ">
             <div class="space-y-4 sm:col-span-2 sm:space-y-6">
                 <div>
-                    <label for="TenTin" class="label">Tiêu đề</label>
-                    <input type="text" name="TenTin" id="TenTin" class="input" placeholder="Type product name"
+                    <label for="TenGt" class="label">Tiêu đề</label>
+                    <input type="text" name="TenGt" id="TenGt" class="input" placeholder="Type product name"
                         required="">
                 </div>
                 <div>
-                    <label for="TomTat" class="label">Tóm tắt</label>
-                    <textarea id="TomTat" name="TomTat" name="TomTat" class="text-field-sm" required=""></textarea>
-                </div>
-                <div>
-                    <label for="NoiDung" class="label">Nội dung</label>
-                    <textarea id="NoiDungU" name="NoiDung" class="text-field-lg editor" required=""></textarea>
-                </div>
-                <div class="mb-4">
-                    <span class="label" id="imgInpLabel-2">Ảnh</span>
-                    <div class="flex justify-center items-center w-full">
-                        <label for="dropzone-file-2"
-                            class="relative flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                            <div class="flex flex-col justify-center items-center pt-5 pb-6">
-                                <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400" fill="none"
-                                    stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                                </svg>
-                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                    <span class="font-semibold" id="imgSeletorText">Click để thêm ảnh</span>
-                                </p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">hỗ trợ PNG, JPG</p>
-                            </div>
-                            <img id="imgInputPreview-2" src="" alt=""
-                                class="absolute w-full h-full inset-0 hidden hover:opacity-30 object-cover object-center">
-                            <input id="dropzone-file-2" type="file" name="Anh" class="hidden" accept=".JPG,.png">
-                        </label>
-                    </div>
+                    <label for="NoiDungGt" class="label">Nội dung</label>
+                    <textarea id="NoiDungGtU" name="NoiDungGt" class="text-field-lg editor" required=""></textarea>
                 </div>
             </div>
-            <div class="flex flex-col justify-between space-y-4 sm:space-y-6">
-                <div>
-                    <label for="TenNhomTin" class="label">Nhóm tin</label>
-                    <input type="text" name="TenNhomTin" id="TenNhomTin" class="input" placeholder="Nhập tên nhóm tin"
-                        required="" list="TenNhomTins">
-                    <datalist id="TenNhomTins">
-                        @{
-                            foreach (var nhomtin in Model.NhomTins)
-                            {
-                                <option value="@Html.Raw(nhomtin.TenNhomTin)"></option>
-                            }
-                        }
-                    </datalist>
-                </div>
-                <div class="flex flex-col gap-4 mt-6">
-                    <button type="submit" class="btn-primary h-20" value="submit">Cập nhật</button>
-                    <button type="button" class="btn-danger-outline h-20">
-                        <svg aria-hidden="true" class="w-5 h-5 mr-1 -ml-1" fill="currentColor" viewbox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        Xóa
-                    </button>
-                </div>
+            <div class="flex flex-col gap-4 mt-6">
+                <button type="submit" class="btn-primary h-20" value="submit">Cập nhật</button>
+                <button type="button" class="btn-danger-outline h-20">
+                    <svg aria-hidden="true" class="w-5 h-5 mr-1 -ml-1" fill="currentColor" viewbox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    Xóa
+                </button>
             </div>
         </div>
         <div id="editorCover" class="drawer-cover">
@@ -498,7 +336,7 @@
         </div>
     </div>
 </form>
-<!-- Preview Drawer -->
+@* <!-- Preview Drawer -->
 <div id="drawer-preview"
     class="overflow-y-auto fixed top-0 left-0 z-40 p-4 w-full max-w-lg h-screen bg-white transition-transform -translate-x-full dark:bg-gray-800"
     tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
@@ -520,40 +358,17 @@
     <div class="grid grid-cols-3 gap-4 mb-4 mt-2 sm:mb-5">
         
     </div>
-    <div class="sm:mb-5">
+    <dl class="sm:mb-5">
         <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Xem trước thu nhỏ</dt>
         <div class="flex flex-row w-full h-fit border border-black" id="preview-box">
         </div>
-    </div>
-    <dl class="mb-4 mt-10">
-        <dt class="mb-2 w-full font-semibold leading-none text-gray-900 dark:text-white">Xem trước trang nội dung</dt>
-        <hr>
-        <dl id="preview-content">
-        </dl>
     </dl>
-    @* <div class="flex bottom-0 left-0 justify-center pb-4 space-x-4 w-full">
-        <button type="button"
-            class="text-white w-full inline-flex items-center justify-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-            <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                <path fill-rule="evenodd"
-                    d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                    clip-rule="evenodd" />
-            </svg>
-            Sửa
-        </button>
-        <button type="button"
-            class="inline-flex w-full items-center text-white justify-center bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
-            <svg aria-hidden="true" class="w-5 h-5 mr-1.5 -ml-1" fill="currentColor" viewbox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" />
-            </svg>
-            Delete
-        </button>
-    </div> *@
-</div>
+    <dl class="mb-4">
+        <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Xem trước trang nội dung</dt>
+        <div class="flex flex-row w-full h-fit" id="preview-content">
+        </div>
+    </dl>
+</div> *@
 <!-- Delete Modal -->
 <div id="delete-modal" tabindex="-1"
     class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -588,5 +403,5 @@
         </div>
     </div>
 </div>
-<script src="~/js/CrudTinTuc.js"></script>
-<script src="~/js/imgUploadHandler.js"></script>
+<script src="~/js/CrudGioiThieu.js"></script>
+@* <script src="~/js/imgUploadHandler.js"></script> *@

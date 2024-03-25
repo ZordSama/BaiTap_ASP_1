@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ABC</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/TruongABC_PhamQuangSang.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Tailwind.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/lib/izitoast/dist/css/iziToast.min.css">
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="~/lib/izitoast/dist/css/iziToast.min.css">
+    <script src="~/lib/izitoast/dist/js/iziToast.min.js"></script>
+    
     <script src="~/lib/ckeditor/ckeditor.js"></script>
     <script src="~/lib/ckeditor/adapters/jquery.js"></script>
 
@@ -18,37 +20,87 @@
 
 <body>
     <header>
-        <nav class="sticky inset-x-0 top-0 flex flex-row justify-between px-5">
-            <div class="navhead">
-                <a class="text-center w-fit block" asp-area="" asp-controller="Home" asp-action="Index">
-                    <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <path
-                                d="M6 11.4999H7M6 15.4999H7M17 15.4999H18M17 11.4999H18M11.5 11.4999H12.5M10 20.9999V16.9999C10 15.8954 10.8954 14.9999 12 14.9999C13.1046 14.9999 14 15.8954 14 16.9999V20.9999M17 7.49995L18.5761 7.89398C19.4428 8.11064 19.8761 8.21898 20.1988 8.46057C20.4834 8.67373 20.7061 8.95895 20.8439 9.28682C21 9.65843 21 10.1051 21 10.9984V17.7999C21 18.9201 21 19.4801 20.782 19.9079C20.5903 20.2843 20.2843 20.5902 19.908 20.782C19.4802 20.9999 18.9201 20.9999 17.8 20.9999H6.2C5.0799 20.9999 4.51984 20.9999 4.09202 20.782C3.71569 20.5902 3.40973 20.2843 3.21799 19.9079C3 19.4801 3 18.9201 3 17.7999V10.9984C3 10.1051 3 9.65843 3.15613 9.28682C3.29388 8.95895 3.51657 8.67373 3.80124 8.46057C4.12389 8.21898 4.55722 8.11064 5.42388 7.89398L7 7.49995L9.85931 4.92657C10.6159 4.2456 10.9943 3.90512 11.4221 3.77598C11.799 3.66224 12.201 3.66224 12.5779 3.77598C13.0057 3.90512 13.3841 4.2456 14.1407 4.92657L17 7.49995Z"
-                                stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </g>
-                    </svg>
-                    <span class="-mt-2">Logo</span>
+        <nav class="navbar">
+            <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a href="http://github.com/ZordSama" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <svg fill="currentColor" class="w-10 h-10" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 508 508" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M319.5,164.8l-95.2-42.4c-4.3-1.9-9.3-1-12.6,2.3c-3.3,3.3-4.3,8.3-2.3,12.6l42.4,95.2c2.5,5.7,9.3,8.4,15,5.7 c5.4-2.5,8-9.2,5.6-14.9l-9.6-21.5l25.9-25.9l21.5,9.6c5.7,2.5,12.4,0,15-5.7C327.7,174.1,325.2,167.4,319.5,164.8z M252.9,179.6 L242,155.2l24.5,10.9L252.9,179.6z"></path> </g> </g> <g> <g> <path d="M453.9,239.9h-83l34.5-34.5c21.1-21.1,21.1-55.4,0-76.5L292.2,15.8C282,5.6,268.4,0,254,0c-14.4,0-28,5.6-38.2,15.8 L102.7,128.9c-21.1,21.1-21.1,55.4,0,76.5l34.5,34.5h-83C24.3,239.9,0,264.2,0,294v159.9C0,483.7,24.3,508,54.1,508H214 c15.8,0,30.1-6.9,40-17.8c9.9,10.9,24.1,17.8,40,17.8h159.9c29.8,0,54.1-24.3,54.1-54.1V294C508,264.2,483.7,239.9,453.9,239.9z M239.9,453.9c0,14.3-11.6,25.9-25.9,25.9H54.1c-14.3,0-25.9-11.6-25.9-25.9V294c0-14.3,11.6-25.9,25.9-25.9h111.3l50.4,50.4 c6.8,6.8,15.1,11.6,24.1,14V453.9z M254,306.1c-6.9,0-13.4-2.7-18.3-7.6l-113.1-113c-10.1-10.1-10.1-26.5,0-36.6L235.7,35.8 c4.9-4.9,11.4-7.6,18.3-7.6s13.4,2.7,18.3,7.6l113.1,113.1c10.1,10.1,10.1,26.5,0,36.6L272.3,298.6 C267.4,303.4,260.9,306.1,254,306.1z M479.8,453.9L479.8,453.9c0,14.3-11.6,25.9-25.9,25.9H294c-14.3,0-25.9-11.6-25.9-25.9V332.5 c9-2.4,17.3-7.2,24.1-14l50.4-50.4h111.3c14.3,0,25.9,11.6,25.9,25.9V453.9z"></path> </g> </g> <g> <g> <path d="M170.3,349.8c0-19.8-16-35.8-35.6-35.8h-25.5c-6.3,0-11.3,5.1-11.3,11.3v48.6c0,0,0,0,0,0.1c0,0,0,0,0,0.1v48.6 c0,6.3,5.1,11.3,11.3,11.3h25.5c19.6,0,35.6-16,35.6-35.6c0-9.4-3.7-18-9.8-24.3C166.5,367.7,170.3,359.2,170.3,349.8z M134.7,411.2h-14.2v-25.9h14.2c7.1,0,12.9,5.8,12.9,12.9C147.6,405.4,141.8,411.2,134.7,411.2z M134.7,362.5h-14.2v-25.9h14.2 c7.1,0,12.9,5.8,12.9,12.9C147.6,356.7,141.8,362.5,134.7,362.5z"></path> </g> </g> <g> <g> <path d="M406.1,399.3c-7,7.7-17,12-27.4,12c-20.6,0-37.3-16.7-37.3-37.3s16.7-37.3,37.3-37.3c12,0,22.9,5.5,30,15.1 c3.7,5,10.8,6.1,15.9,2.4c5-3.7,6.1-10.8,2.4-15.9c-11.3-15.2-29.4-24.3-48.3-24.3c-33.1,0-60,26.9-60,60c0,33.1,26.9,60,60,60 c16.7,0,32.8-7.1,44.1-19.4c4.2-4.6,3.9-11.8-0.7-16C417.5,394.4,410.3,394.7,406.1,399.3z"></path> </g> </g> </g></svg>
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Trường ABC</span>
                 </a>
-            </div>
-            <div class="navbody">Mấy cái link</div>
-            <div class="navtail">
-                <a asp-controller="Admin" asp-action="Index">Admin</a>
+                <div class="items-center justify-between hidden w-full md:flex md:w-auto" id="navbar-sticky">
+                    <ul class="nav-ul">
+                        <li>
+                            <a  class="custom-navlink" asp-controller="CRUD" asp-action="GioiThieu">Quản lí Giới thiệu</a>
+                        </li>
+                        <li>
+                            <a  class="custom-navlink" asp-controller="CRUD" asp-action="TinTuc">Quản lí Tin Tức</a>
+                        </li>
+                        @* <li>
+                            <a  class="custom-navlink" asp-controller="CRUD" asp-action="Diem">Quản lí Điểm</a>
+                        </li> 
+                        <li>
+                            <a  class="custom-navlink" asp-controller="CRUD" asp-action="GiangVien">Quản lí Giảng viên</a>
+                        </li>
+                        <li>
+                            <a  class="custom-navlink" asp-controller="CRUD" asp-action="LienKet">Quản lí Liên kết</a>
+                        </li>
+                        <li>
+                            <a  class="custom-navlink" asp-controller="CRUD" asp-action="Lop">Quản lí Lớp</a>
+                        </li>
+                        <li>
+                            <a  class="custom-navlink" asp-controller="CRUD" asp-action="MonHoc">Quản lí Môn học</a>
+                        </li>
+                        <li>
+                            <a  class="custom-navlink" asp-controller="CRUD" asp-action="VanBanPQ">Quản lí Văn bản PQ</a>
+                        </li> *@
+                        <li>
+                            <a  class="custom-navlink" asp-controller="CRUD" asp-action="LichCT">Quản lí Lịch CT</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <a asp-controller="Auth" asp-action="Index" class="btn btn-primary">Đăng nhập/Đăng kí</a>
+                </div>
             </div>
         </nav>
     </header>
     <div class="" style="min-width: 100vh;">
-        <main role="main" class="pb-3" style="min-width: 100vh;">
+        <main role="main" class="pb-3 mt-20" style="min-width: 100vh;">
             @RenderBody()
         </main>
     </div>
-    <footer class="inset-x-0 bottom-0">
-        Chân page
-    </footer>
+
+
+<footer class="bg-white rounded-lg shadow dark:bg-gray-900 m-4">
+    <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+        <div class="sm:flex sm:items-center sm:justify-between">
+            <a href="github.com/ZordSama" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+                <svg fill="currentColor" class="w-10 h-10" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 508 508" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M319.5,164.8l-95.2-42.4c-4.3-1.9-9.3-1-12.6,2.3c-3.3,3.3-4.3,8.3-2.3,12.6l42.4,95.2c2.5,5.7,9.3,8.4,15,5.7 c5.4-2.5,8-9.2,5.6-14.9l-9.6-21.5l25.9-25.9l21.5,9.6c5.7,2.5,12.4,0,15-5.7C327.7,174.1,325.2,167.4,319.5,164.8z M252.9,179.6 L242,155.2l24.5,10.9L252.9,179.6z"></path> </g> </g> <g> <g> <path d="M453.9,239.9h-83l34.5-34.5c21.1-21.1,21.1-55.4,0-76.5L292.2,15.8C282,5.6,268.4,0,254,0c-14.4,0-28,5.6-38.2,15.8 L102.7,128.9c-21.1,21.1-21.1,55.4,0,76.5l34.5,34.5h-83C24.3,239.9,0,264.2,0,294v159.9C0,483.7,24.3,508,54.1,508H214 c15.8,0,30.1-6.9,40-17.8c9.9,10.9,24.1,17.8,40,17.8h159.9c29.8,0,54.1-24.3,54.1-54.1V294C508,264.2,483.7,239.9,453.9,239.9z M239.9,453.9c0,14.3-11.6,25.9-25.9,25.9H54.1c-14.3,0-25.9-11.6-25.9-25.9V294c0-14.3,11.6-25.9,25.9-25.9h111.3l50.4,50.4 c6.8,6.8,15.1,11.6,24.1,14V453.9z M254,306.1c-6.9,0-13.4-2.7-18.3-7.6l-113.1-113c-10.1-10.1-10.1-26.5,0-36.6L235.7,35.8 c4.9-4.9,11.4-7.6,18.3-7.6s13.4,2.7,18.3,7.6l113.1,113.1c10.1,10.1,10.1,26.5,0,36.6L272.3,298.6 C267.4,303.4,260.9,306.1,254,306.1z M479.8,453.9L479.8,453.9c0,14.3-11.6,25.9-25.9,25.9H294c-14.3,0-25.9-11.6-25.9-25.9V332.5 c9-2.4,17.3-7.2,24.1-14l50.4-50.4h111.3c14.3,0,25.9,11.6,25.9,25.9V453.9z"></path> </g> </g> <g> <g> <path d="M170.3,349.8c0-19.8-16-35.8-35.6-35.8h-25.5c-6.3,0-11.3,5.1-11.3,11.3v48.6c0,0,0,0,0,0.1c0,0,0,0,0,0.1v48.6 c0,6.3,5.1,11.3,11.3,11.3h25.5c19.6,0,35.6-16,35.6-35.6c0-9.4-3.7-18-9.8-24.3C166.5,367.7,170.3,359.2,170.3,349.8z M134.7,411.2h-14.2v-25.9h14.2c7.1,0,12.9,5.8,12.9,12.9C147.6,405.4,141.8,411.2,134.7,411.2z M134.7,362.5h-14.2v-25.9h14.2 c7.1,0,12.9,5.8,12.9,12.9C147.6,356.7,141.8,362.5,134.7,362.5z"></path> </g> </g> <g> <g> <path d="M406.1,399.3c-7,7.7-17,12-27.4,12c-20.6,0-37.3-16.7-37.3-37.3s16.7-37.3,37.3-37.3c12,0,22.9,5.5,30,15.1 c3.7,5,10.8,6.1,15.9,2.4c5-3.7,6.1-10.8,2.4-15.9c-11.3-15.2-29.4-24.3-48.3-24.3c-33.1,0-60,26.9-60,60c0,33.1,26.9,60,60,60 c16.7,0,32.8-7.1,44.1-19.4c4.2-4.6,3.9-11.8-0.7-16C417.5,394.4,410.3,394.7,406.1,399.3z"></path> </g> </g> </g></svg>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Zord - Phạm Quang Sáng</span>
+            </a>
+            <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">About</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="http://github.com/ZordSama" class="hover:underline">Zord™</a>. All Rights Reserved.</span>
+    </div>
+</footer>
+
+
     <script src="~/lib/flowbite/flowbite.min.js"></script>
-    <script src="~/lib/izitoast/dist/js/iziToast.min.js"></script>
+    <script src="~/lib/flowbite/datepicker.min.js"></script>
+    
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -25,6 +25,8 @@ public partial class TruongAbcContext : DbContext
 
     public virtual DbSet<MonHoc> MonHocs { get; set; }
 
+    public virtual DbSet<NguoiDung> NguoiDungs { get; set; }
+
     public virtual DbSet<NhomTin> NhomTins { get; set; }
 
     public virtual DbSet<TinTuc> TinTucs { get; set; }
@@ -123,6 +125,20 @@ public partial class TruongAbcContext : DbContext
 
             entity.Property(e => e.IdMon).HasColumnName("ID_MON");
             entity.Property(e => e.TenMon).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<NguoiDung>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("NGUOI_DUNG");
+
+            entity.Property(e => e.Id)
+                .HasMaxLength(255)
+                .HasColumnName("ID");
+            entity.Property(e => e.Passwd).HasMaxLength(255);
+            entity.Property(e => e.Quyen).HasComment("");
+            entity.Property(e => e.TenNgDung).HasMaxLength(255);
         });
 
         modelBuilder.Entity<NhomTin>(entity =>

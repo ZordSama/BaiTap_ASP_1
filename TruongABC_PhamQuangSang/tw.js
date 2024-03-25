@@ -43,7 +43,7 @@ setInterval(()=>{
 
 // Function to add build request to the queue
 function addToBuildQueue(filePath) {
-    if (buildQueue.length < 1) {
+  if (buildQueue.length < 1 && !filePath.endsWith("Tailwind.css") && !(filePath.indexOf("lib") != -1)) {
       console.log("Added to build queue:", filePath);
       buildQueue.push(buildTailwind);
     } else {

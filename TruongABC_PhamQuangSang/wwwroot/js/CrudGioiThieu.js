@@ -1,49 +1,49 @@
 // var isUploaded = false;
 $(document).ready(function () {
-  $("#drawer-update-TinTuc").on("submit", function (e) {
+  $("#drawer-update-GioiThieu").on("submit", function (e) {
     e.preventDefault();
     // console.log(CKEDITOR.instances["NoiDungU"].getData());
-    editTinTuc();
+    editGioiThieu();
   });
-  $("#fcreateTinTuc").on("submit", function (e) {
+  $("#fcreateGioiThieu").on("submit", function (e) {
     e.preventDefault();
-    createTinTuc();
+    createGioiThieu();
   });
 });
-function getTinTuc(ID) {
-  var TinTuc;
+function getGioiThieu(ID) {
+  var GioiThieu;
   $.ajax({
-    url: "/CRUD/GetTinTuc/" + ID,
+    url: "/CRUD/GetGioiThieu/" + ID,
     async: false,
     type: "GET",
     datatype: "json",
     success: function (response) {
       if (response.success) {
-        TinTuc = JSON.parse(response.data);
-        // console.log(TinTuc);
-        fillTinTuc(TinTuc);
+        GioiThieu = JSON.parse(response.data);
+        // console.log(GioiThieu);
+        fillGioiThieu(GioiThieu);
         $("#editorCover").hide();
-        CKEDITOR.instances["NoiDungU"].setData(TinTuc["NoiDung"]);
+        CKEDITOR.instances["NoiDungGtU"].setData(GioiThieu["NoiDung"]);
       }
     },
     error: function (response) {
       result = response;
     },
   });
-  // console.log(TinTuc);
-  return TinTuc;
+  // console.log(GioiThieu);
+  return GioiThieu;
 }
-function fillTinTuc(TinTuc, url) {
-  var Form = $("#drawer-update-TinTuc");
-  $("#alterID").html(TinTuc["TenTin"]);
-  for (var key in TinTuc) {
+function fillGioiThieu(GioiThieu, url) {
+  var Form = $("#drawer-update-GioiThieu");
+  $("#alterID").html(GioiThieu["TenGt"]);
+  for (var key in GioiThieu) {
     var inp = Form.find("[name=" + key + "]");
-    if (inp.is("input") && inp.attr("type") !== "file") inp.val(TinTuc[key]);
+    if (inp.is("input") && inp.attr("type") !== "file") inp.val(GioiThieu[key]);
     if (inp.is("textarea")) {
-      inp.html(TinTuc[key]);
+      inp.html(GioiThieu[key]);
     }
     if (inp.attr("type") === "file") {
-      var url = getImgURL(TinTuc[key]);
+      var url = getImgURL(GioiThieu[key]);
       var imgPreview = $("#imgInputPreview-2");
       imgPreview.attr("src", url);
       imgPreview.show();
@@ -51,13 +51,13 @@ function fillTinTuc(TinTuc, url) {
     }
   }
 }
-function createTinTuc() {
-  var formData = new FormData(document.getElementById("fcreateTinTuc"));
-  var file = $("#dropzone-file").prop("files")[0];
-  if (file != undefined) formData.append("file", file);
-  formData.set("NoiDung", CKEDITOR.instances["NoiDungC"].getData());
+function createGioiThieu() {
+  var formData = new FormData(document.getElementById("fcreateGioiThieu"));
+  // var file = $("#dropzone-file").prop("files")[0];
+  // if (file != undefined) formData.append("file", file);
+  formData.set("NoiDungGt", CKEDITOR.instances["NoiDungGtC"].getData());
   $.ajax({
-    url: "/CRUD/CreateTinTuc/",
+    url: "/CRUD/CreateGioiThieu/",
     type: "POST",
     contentType: false,
     processData: false,
@@ -83,13 +83,18 @@ function createTinTuc() {
   });
 }
 
-function editTinTuc() {
-  var formData = new FormData(document.getElementById("drawer-update-TinTuc"));
-  var file = $("#dropzone-file-2").prop("files")[0];
-  if (file != undefined) formData.append("file", file);
-  formData.set("NoiDung", CKEDITOR.instances["NoiDungU"].getData());
+function editGioiThieu() {
+  var formData = new FormData(document.getElementById("drawer-update-GioiThieu"));
+  // var payload = {}
+  // formData.forEach((value, key) => {
+  //   payload[key] = value;
+  // });
+  // console.log(payload);
+  // var file = $("#dropzone-file-2").prop("files")[0];
+  // if (file != undefined) formData.append("file", file);
+  formData.set("NoiDungGt", CKEDITOR.instances["NoiDungGtU"].getData());
   $.ajax({
-    url: "/CRUD/UpdateTinTuc/",
+    url: "/CRUD/UpdateGioiThieu/",
     type: "PUT",
     contentType: false,
     processData: false,
@@ -115,11 +120,11 @@ function editTinTuc() {
   });
 }
 
-function deleteTinTuc(id) {
+function deleteGioiThieu(id) {
   $.ajax({
-    url: "/CRUD/DeleteTinTuc/",
+    url: "/CRUD/DeleteGioiThieu/",
     type: "DELETE",
-    data: { idTin: id },
+    data: { id: id },
     success: function (response) {
       if (response.success) {
         // toast
@@ -144,36 +149,7 @@ function setDelId(id) {
 }
 function delBtnConfirmed() {
   var id = $("#delId").val();
-  deleteTinTuc(id);
-}
-
-function detailsReq(id) {
-  var TinTuc = getTinTuc(id);
-  let TenAnh = "ảnh\nlỗi";
-  if (TinTuc["Anh"]) {
-    TenAnh = TinTuc["Anh"].split("/").pop();
-  }
-  $("#preview-drawer-label").html(TinTuc["TenTin"]);
-  $("#NhomLabel").html(TinTuc["TenNhomTin"]);
-  // console.log(TinTuc);
-  $("#preview-box").html(
-    `
-    <img class="object-cover object-center w-32 h-20 truncate" src="${getImgURL(TinTuc["Anh"])}" alt=${TenAnh}>
-    <div class="flex flex-col justify-center ml-2">
-      <h1 class="text-lg font-semibold">${TinTuc["TenTin"]}</h1>
-      <p class="text-sm text-ellipsis">${TinTuc["TomTat"]}</p>
-    </div>
-    `
-  );
-  $("#preview-content").html(
-    `
-    <dd class="prose truncate text-wrap">
-      <h1 class="text-lg font-semibold">${TinTuc["TenTin"]}</h1>
-      <p class="text-sm">${TinTuc["TomTat"]}</p>
-      <p class="text-sm">${TinTuc["NoiDung"]}</p>
-    </dd>
-    `
-  );
+  deleteGioiThieu(id);
 }
 
 function reloadPage(){

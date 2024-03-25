@@ -5,8 +5,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<TruongAbcContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TruongAbcContext")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TruongAbcContext"))
+);
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "TruongABC.Session";
+    options.IdleTimeout = new TimeSpan(24, 0, 0);
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -25,8 +34,8 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseSession();
+
+app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
