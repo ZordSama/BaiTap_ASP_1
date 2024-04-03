@@ -23,15 +23,17 @@ public class AuthController : Controller
 
     public JsonResult Login(IFormCollection req)
     {
-        var username = req["TenNgDung"];
-        var password = req["Passwd"];
+        var username = Convert.ToString(req["TenNgDung"]);
+        string password = Convert.ToString(req["Passwd"]);
         NguoiDung? user = _db.NguoiDungs.FirstOrDefault(u => u.TenNgDung == username && u.Passwd == password);
         if (user == null)
-            return Json(new {success = false, message = "Invalid username or password!"});
-        // Your login logic here
+            return Json(new { success = false, message = "Invalid username or password!" });
+
+        HttpContext.Session.SetString("user", JsonConvert.SerializeObject(user));
         return Json(new { success = true, message = "Login successful!" });
     }
-    public IActionResult Logout(){
+    public IActionResult Logout()
+    {
         HttpContext.Session.Clear();
         return RedirectToAction("Index", "Auth");
     }

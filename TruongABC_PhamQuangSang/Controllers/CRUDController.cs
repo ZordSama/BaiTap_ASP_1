@@ -332,13 +332,7 @@ public class CRUDController : Controller
         Console.WriteLine(data);
         try
         {
-            // Console.WriteLine(newGioiThieu);
             GioiThieu? gioiThieu = JsonConvert.DeserializeObject<GioiThieu>(data);
-            // Console.WriteLine(JsonConvert.SerializeObject(gioiThieu));
-            // Console.WriteLine(serializedForm);
-            // GioiThieu? gioithieu = JsonConvert.DeserializeObject<GioiThieu>(serializedForm);
-            // GioiThieu? gioiThieu;
-            // Console.WriteLine(JsonConvert.SerializeObject(gioithieu));
             if (gioiThieu != null)
             {
                 _db.GioiThieus.Update(gioiThieu);
